@@ -51,6 +51,8 @@ describe("Mars Rover", function () {
 				"F",
 				"R",
 			]);
+            expect(marsRover.formattedInstructions(instructions).length).toEqual(instructions.length);
+            expect(marsRover.formattedInstructions(instructions)).toBeInstanceOf(Array);
 		});
 		
 	});
