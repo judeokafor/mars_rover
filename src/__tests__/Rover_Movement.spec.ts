@@ -103,4 +103,34 @@ describe("Mars Rover Movements", function () {
 			expect(marsRover.currentPosition).toEqual([5, 2]);
 		});
 	});
+
+	describe("There is no edge of the world", () => {
+		it("should expect a negative value on the Y axis", () => {
+			const marsRover = new Rover({
+				currentPosition: [2, 1],
+				orientation: Directions.SOUTH,
+			});
+			marsRover.executeInstructions("FFFLBRL");
+			expect(marsRover.currentPosition).toEqual([1, -2]);
+			expect(marsRover.orientation).toEqual(Directions.EAST);
+		});
+		it("should expect a negative value on the X axis", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 1],
+				orientation: Directions.WEST,
+			});
+			marsRover.executeInstructions("FFFR");
+			expect(marsRover.currentPosition).toEqual([-3, 1]);
+			expect(marsRover.orientation).toEqual(Directions.NORTH);
+		});
+		it("should expect a negative value on the both axis", () => {
+			const marsRover = new Rover({
+				currentPosition: [1, 0],
+				orientation: Directions.WEST,
+			});
+			marsRover.executeInstructions("FFFRRBBBRRFFBLFFF");
+			expect(marsRover.currentPosition).toEqual([-6, -3]);
+			expect(marsRover.orientation).toEqual(Directions.SOUTH);
+		});
+	});
 });
