@@ -11,4 +11,19 @@ describe("Mars Rover", function () {
 			expect(marsRover.orientation).toEqual(Directions.NORTH);
 		})
 	})
+
+    describe("Initialized Mars Rover with specified params", () => {
+		it("should set starting location", function () {
+			const marsRover = new Rover({
+				currentPosition: [1, 2],
+			});
+			expect(marsRover.currentPosition).toEqual([1, 2]);
+		});
+		it("should set starting Direction/Orientation", function () {
+			const marsRover = new Rover({
+				orientation: Directions.EAST,
+			});
+			expect(marsRover.orientation).toEqual(Directions.EAST);
+		});
+	});
 });
