@@ -3,10 +3,12 @@ import CardinalPoints from "./constants";
 export default class Rover {
 	currentPosition: number[];
 	orientation: Directions;
+	obstacles: Array<number[]>;
 
-	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH }) {
+	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH, obstacles = [] as Array<number[]>, }) {
 		this.currentPosition = currentPosition;
 		this.orientation = orientation;
+		this.obstacles = obstacles;
 	}
 
 	formattedInstructions = (instructions: string) => {
