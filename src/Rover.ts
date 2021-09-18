@@ -24,9 +24,14 @@ export default class Rover {
 		else if (orientation === Directions.EAST) xIncrease = 1;
 		else if (orientation === Directions.WEST) xIncrease = -1;
 
+		if (direction === InstructionCommands.B) {
+			xIncrease *= -1;
+			yIncrease *= -1;
+		}
+
 		return [x + xIncrease, y + yIncrease];
 	}
-	
+
 	executeInstructions = (instructions: string) => {
 		const formattedInstructions = this.formattedInstructions(instructions);
 		for (const instruction of formattedInstructions) {
@@ -36,13 +41,11 @@ export default class Rover {
 					this.orientation = CardinalPoints[this.orientation][instruction];
 					break;
 				case "F":
+				case "B":
 					this.currentPosition = this.moveRover(
 						this.orientation,
 						InstructionCommands[instruction]
 					);
-					break;
-				case "B":
-					// move rover backeward
 					break;
 
 				default:
