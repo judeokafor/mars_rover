@@ -26,4 +26,32 @@ describe("Mars Rover", function () {
 			expect(marsRover.orientation).toEqual(Directions.EAST);
 		});
 	});
+
+    describe("Rover should receive input values", () => {
+		it("Should format the input ", () => {
+			const instructions = "FFRFF";
+			const marsRover = new Rover({
+				orientation: Directions.EAST,
+			});
+			expect(marsRover.formattedInstructions(instructions)).toEqual([
+				"F",
+				"F",
+				"R",
+				"F",
+				"F",
+			]);
+		});
+		it("Should format the input from lowercase to uppercase ", () => {
+			const instructions = "ffr";
+			const marsRover = new Rover({
+				orientation: Directions.EAST,
+			});
+			expect(marsRover.formattedInstructions(instructions)).toEqual([
+				"F",
+				"F",
+				"R",
+			]);
+		});
+		
+	});
 });
