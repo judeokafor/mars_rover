@@ -14,7 +14,7 @@ export default class Rover {
 	formattedInstructions = (instructions: string) => {
         return instructions.toUpperCase().trim().split("");
     }
-	
+	1
 	executeInstructions = (instructions: string) => {
 		const formattedInstructions = this.formattedInstructions(instructions);
 		for (const instruction of formattedInstructions) {
