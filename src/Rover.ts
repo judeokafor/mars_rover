@@ -14,4 +14,21 @@ export default class Rover {
 	formattedInstructions = (instructions: string) => {
         return instructions.toUpperCase().trim().split("");
     }
+	
+	executeInstructions = (instructions: string) => {
+		const formattedInstructions = this.formattedInstructions(instructions);
+		for (const instruction of formattedInstructions) {
+			switch (instruction) {
+				case "L":
+				case "R":
+				case "F":
+				case "B":
+				// switch orientation
+					break;
+				
+				default:
+					throw new Error(`${instruction} is not a valid instruction`);
+			}
+		}
+	}
 }
