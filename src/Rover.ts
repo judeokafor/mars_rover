@@ -4,11 +4,13 @@ export default class Rover {
 	currentPosition: number[];
 	orientation: Directions;
 	obstacles: Array<number[]>;
+	stopped: boolean;
 
 	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH, obstacles = [] as Array<number[]>, }) {
 		this.currentPosition = currentPosition;
 		this.orientation = orientation;
 		this.obstacles = obstacles;
+		this.stopped = false;
 	}
 
 	formattedInstructions = (instructions: string) => {
@@ -34,25 +36,57 @@ export default class Rover {
 		return [x + xIncrease, y + yIncrease];
 	}
 
+	changeCurrentPositionOrDirection = (direction: string) => {
+		switch (direction) {
+			case "L":
+			case "R":
+				this.orientation = CardinalPoints[this.orientation][direction];
+				break;
+			case "F":
+			case "B":
+			this.currentPosition = this.moveRover(
+					this.orientation,
+					InstructionCommands[direction]
+				);
+				break;
+
+			default:
+				throw new Error(`${direction} is not a valid instruction`);
+		}
+	};
+
+	willCollide = (position: number[]) => {
+		let [x, y] = position;
+
+		return this.obstacles.some((obstacle) => {
+			const [obstacleX, obstacleY] = obstacle;
+			return obstacleX === x && obstacleY === y;
+		});
+	};
+
 	executeInstructions = (instructions: string) => {
 		const formattedInstructions = this.formattedInstructions(instructions);
 		for (const instruction of formattedInstructions) {
-			switch (instruction) {
-				case "L":
-				case "R":
-					this.orientation = CardinalPoints[this.orientation][instruction];
-					break;
-				case "F":
-				case "B":
-					this.currentPosition = this.moveRover(
-						this.orientation,
-						InstructionCommands[instruction]
-					);
-					break;
+			if (instruction === "F" || instruction === "B") {
+				const newPosition = this.moveRover(
+					this.orientation,
+					InstructionCommands[instruction]
+				);
 
-				default:
-					throw new Error(`${instruction} is not a valid instruction`);
+				const willHitObstruction = this.willCollide(newPosition);
+				if (willHitObstruction) {
+					this.stopped = true;
+					break;
+				}
 			}
+
+			this.changeCurrentPositionOrDirection(instruction);
 		}
 	};
+
+	reportPosition() {
+		return `${this.currentPosition} ${this.orientation} ${
+			this.stopped ? "STOPPED" : ""
+		}`;
+	}
 }
