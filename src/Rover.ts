@@ -1,4 +1,4 @@
-import { Directions } from "./types";
+import { Directions, InstructionCommands } from "./types";
 import CardinalPoints from "./constants";
 export default class Rover {
 	currentPosition: number[];
@@ -12,7 +12,21 @@ export default class Rover {
 	formattedInstructions = (instructions: string) => {
 		return instructions.toUpperCase().trim().split("");
 	};
-	1;
+
+	moveRover(orientation: Directions, direction: InstructionCommands) {
+		let [x, y] = this.currentPosition;
+
+		let xIncrease = 0,
+			yIncrease = 0;
+
+		if (orientation === Directions.NORTH) yIncrease = 1;
+		else if (orientation === Directions.SOUTH) yIncrease = -1;
+		else if (orientation === Directions.EAST) xIncrease = 1;
+		else if (orientation === Directions.WEST) xIncrease = -1;
+
+		return [x + xIncrease, y + yIncrease];
+	}
+	
 	executeInstructions = (instructions: string) => {
 		const formattedInstructions = this.formattedInstructions(instructions);
 		for (const instruction of formattedInstructions) {
@@ -22,8 +36,13 @@ export default class Rover {
 					this.orientation = CardinalPoints[this.orientation][instruction];
 					break;
 				case "F":
+					this.currentPosition = this.moveRover(
+						this.orientation,
+						InstructionCommands[instruction]
+					);
+					break;
 				case "B":
-					// move rover
+					// move rover backeward
 					break;
 
 				default:

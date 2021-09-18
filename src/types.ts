@@ -4,3 +4,10 @@ export enum Directions {
 	EAST = "EAST",
 	WEST = "WEST",
 }
+
+export enum InstructionCommands {
+	F = "FORWARD",
+	B = "BACKWARD",
+	L = "LEFT",
+	R = "RIGHT",
+}
