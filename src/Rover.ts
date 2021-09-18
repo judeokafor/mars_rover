@@ -10,4 +10,8 @@ export default class Rover {
 		this.currentPosition = currentPosition;
 		this.orientation = orientation;
 	}
+	
+	formattedInstructions = (instructions: string) => {
+        return instructions.toUpperCase().trim().split("");
+    }
 }
