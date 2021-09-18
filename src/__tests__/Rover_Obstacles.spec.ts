@@ -1,5 +1,5 @@
 import Rover from "../Rover";
-import { Directions } from "../types";
+import { Directions } from "../Rover/types";
 
 describe("Mars Rover Obstacles",  () => {
 

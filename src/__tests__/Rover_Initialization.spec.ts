@@ -1,5 +1,5 @@
-import Rover from '../Rover';
-import { Directions }from '../types';
+import Rover from '../Rover/';
+import { Directions }from '../Rover/types';
 describe("Mars Rover", function () {
 	describe("Rover class set up with default ", () => {
 		it("Set up Rover with fallback position to 0 x 0", () => {
