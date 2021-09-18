@@ -68,4 +68,39 @@ describe("Mars Rover Movements", function () {
 			expect(marsRover.currentPosition).toEqual([1, 3]);
 		});
 	});
+
+	describe("Rover should have the ability to move backward in any direction denoted by (B)", () => {
+		it("should reduce Y axis when moving backward North", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 3],
+				orientation: Directions.NORTH,
+			});
+			marsRover.executeInstructions("BBB");
+			expect(marsRover.currentPosition).toEqual([0, 0]);
+		});
+		it("should increase Y axis when moving backward South", () => {
+			const marsRover = new Rover({
+				currentPosition: [1, 2],
+				orientation: Directions.SOUTH,
+			});
+			marsRover.executeInstructions("BB");
+			expect(marsRover.currentPosition).toEqual([1, 4]);
+		});
+		it("should reduce X axis when moving backward East", () => {
+			const marsRover = new Rover({
+				currentPosition: [3, 2],
+				orientation: Directions.EAST,
+			});
+			marsRover.executeInstructions("BB");
+			expect(marsRover.currentPosition).toEqual([1, 2]);
+		});
+		it("should increase X axis when moving backward West", () => {
+			const marsRover = new Rover({
+				currentPosition: [3, 2],
+				orientation: Directions.WEST,
+			});
+			marsRover.executeInstructions("BB");
+			expect(marsRover.currentPosition).toEqual([5, 2]);
+		});
+	});
 });
