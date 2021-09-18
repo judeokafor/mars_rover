@@ -33,4 +33,39 @@ describe("Mars Rover Movements", function () {
 			expect(marsRover.orientation).toEqual(Directions.SOUTH);
 		});
 	});
+
+	describe("Rover should have the ability to move forward in any direction denoted by (F)", () => {
+		it("should increase Y axis when moving North", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 3],
+				orientation: Directions.NORTH,
+			});
+			marsRover.executeInstructions("FFF");
+			expect(marsRover.currentPosition).toEqual([0, 6]);
+		});
+		it("should reduce Y axis when moving South", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 3],
+				orientation: Directions.SOUTH,
+			});
+			marsRover.executeInstructions("FFF");
+			expect(marsRover.currentPosition).toEqual([0, 0]);
+		});
+		it("should reduce X axis when moving West", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 3],
+				orientation: Directions.WEST,
+			});
+			marsRover.executeInstructions("FF");
+			expect(marsRover.currentPosition).toEqual([-2, 3]);
+		});
+		it("should increase X axis when moving east", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 3],
+				orientation: Directions.EAST,
+			});
+			marsRover.executeInstructions("F");
+			expect(marsRover.currentPosition).toEqual([1, 3]);
+		});
+	});
 });
