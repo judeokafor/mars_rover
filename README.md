@@ -5,7 +5,7 @@ This repo contains solution to the Mars Rover kata challenge using TDD approach.
 Services used:
  * Language [Node/Express](https://expressjs.com/)
 
- * Testing Framework [Jest] (https://jest.com)
+ * Testing Framework [Jest](https://jest.com)
 
  * Built with [Docker](https://docker.com)
 
