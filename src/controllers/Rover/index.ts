@@ -115,7 +115,7 @@ export default class Rover {
 					// [4, 0] ==> [1, 2]; x0 = 4; x1 = 1;
 					// else if the difference is negative and direction is east move backward, else if direction is west move forward ,
 
-					const differenceInXAxis = Math.abs(x1 - x0);
+					
 					const isPositiveDirection = Math.sign(x1 - x0) === 1;
 
 					if ([Directions.EAST, Directions.WEST].includes(presentOrientation)) {
@@ -131,7 +131,7 @@ export default class Rover {
 				}
 
 				if (y0 !== y1) {
-					const differenceInYAxis = Math.abs(y1 - y0);
+					
 					const isPositiveDirection = Math.sign(y1 - y0) === 1;
 
 					if (
