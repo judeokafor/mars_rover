@@ -7,7 +7,12 @@ export default class Rover {
 	stopped: boolean;
 	destination: number[];
 
-	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH, obstacles = [] as Array<number[]>, destination = [] as number[]}) {
+	constructor({
+		currentPosition = [0, 0],
+		orientation = Directions.NORTH,
+		obstacles = [] as Array<number[]>,
+		destination = [] as number[],
+	}) {
 		this.currentPosition = currentPosition;
 		this.orientation = orientation;
 		this.obstacles = obstacles;
@@ -46,7 +51,7 @@ export default class Rover {
 				break;
 			case "F":
 			case "B":
-			this.currentPosition = this.moveRover(
+				this.currentPosition = this.moveRover(
 					this.orientation,
 					InstructionCommands[direction]
 				);
@@ -55,6 +60,8 @@ export default class Rover {
 			default:
 				throw new Error(`${direction} is not a valid instruction`);
 		}
+
+		return this.orientation;
 	};
 
 	willCollide = (position: number[]) => {
@@ -91,4 +98,59 @@ export default class Rover {
 			this.stopped ? "STOPPED" : ""
 		}`;
 	}
+
+	moveToDestination = () => {
+		if (this.destination.length) {
+			let [x0, y0] = this.currentPosition;
+			let presentOrientation = this.orientation;
+			const [x1, y1] = this.destination;
+
+			const commands = [] as InstructionCommands[];
+			let newCommand = InstructionCommands.F;
+
+			while (!(x0 === x1 && y0 === y1)) {
+				if (x0 !== x1) {
+					// [0,1] ===> [2, 4]; x0 = 0; x1 = 2
+					// if the difference between x0 and x1 is positive and direction is east move forward, else if direction is west move backward;
+					// [4, 0] ==> [1, 2]; x0 = 4; x1 = 1;
+					// else if the difference is negative and direction is east move backward, else if direction is west move forward ,
+
+					const differenceInXAxis = Math.abs(x1 - x0);
+					const isPositiveDirection = Math.sign(x1 - x0) === 1;
+
+					if ([Directions.EAST, Directions.WEST].includes(presentOrientation)) {
+						if (isPositiveDirection && presentOrientation === Directions.WEST) {
+							newCommand = InstructionCommands.B;
+                            x0--
+						} else {
+                            x0++
+                        }
+					}
+					for (let index = 0; index < differenceInXAxis; index++) {
+						commands.push(newCommand)
+						this.moveRover(presentOrientation, newCommand);
+					}
+				}
+
+				if (y0 !== y1) {
+					const differenceInYAxis = Math.abs(y1 - y0);
+					const isPositiveDirection = Math.sign(y1 - y0) === 1;
+
+					if ([Directions.NORTH, Directions.SOUTH].includes(presentOrientation)) {
+						if (isPositiveDirection && presentOrientation === Directions.SOUTH) {
+							newCommand = InstructionCommands.B;
+                            y0--;
+						} else {
+                            y0++;
+                        }
+					}
+					for (let index = 0; index < differenceInYAxis; index++) {
+                        commands.push(newCommand);
+						this.moveRover(presentOrientation, newCommand);
+					}
+				}
+			}
+			return commands;
+		}
+	};
 }
