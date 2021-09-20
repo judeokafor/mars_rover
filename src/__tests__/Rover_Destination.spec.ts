@@ -21,4 +21,17 @@ describe("Mars Rover Destination",  () => {
 			expect(marsRover.destination).toEqual([0, 3]);
 		})
     })
+    describe('Rover should have sets of commands', () => {
+        it("should return sets of commands if there is a destination property set", () => {
+			const marsRover = new Rover({
+				currentPosition: [-1, 2],
+				orientation: Directions.WEST,
+                destination: [0, 3],
+			});
+
+			expect(marsRover.moveToDestination()).toBeInstanceOf(Array);
+            expect(marsRover.moveToDestination).toBeCalled();
+            expect(marsRover.moveToDestination()).toReturn()
+		});
+    })
 });
