@@ -18,7 +18,7 @@ describe("Mars Rover Destination",  () => {
 				orientation: Directions.EAST,
 				destination: [0, 3],
 			});
-			expect(marsRover.destination).toEqual([[0, 3]]);
+			expect(marsRover.destination).toEqual([0, 3]);
 		})
     })
 });

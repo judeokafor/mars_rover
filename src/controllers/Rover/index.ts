@@ -5,12 +5,14 @@ export default class Rover {
 	orientation: Directions;
 	obstacles: Array<number[]>;
 	stopped: boolean;
+	destination: number[];
 
-	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH, obstacles = [] as Array<number[]>, }) {
+	constructor({ currentPosition = [0, 0], orientation = Directions.NORTH, obstacles = [] as Array<number[]>, destination = [] as number[]}) {
 		this.currentPosition = currentPosition;
 		this.orientation = orientation;
 		this.obstacles = obstacles;
 		this.stopped = false;
+		this.destination = destination;
 	}
 
 	formattedInstructions = (instructions: string) => {
