@@ -1,5 +1,5 @@
 import Rover from "../controllers/Rover";
-import { Directions } from "../controllers/Rover/types";
+import { Directions, InstructionCommands } from "../controllers/Rover/types";
 
 describe("Mars Rover Destination",  () => {
 
@@ -32,6 +32,18 @@ describe("Mars Rover Destination",  () => {
 			expect(marsRover.moveToDestination()).toBeInstanceOf(Array);
             expect(marsRover.moveToDestination).toBeCalled();
             expect(marsRover.moveToDestination()).toReturn()
+		});
+        it("should turn to a different position if hit an obstacle", () => {
+			const marsRover = new Rover({
+				currentPosition: [0, 0],
+				orientation: Directions.WEST,
+                destination: [0, 3],
+                obstacles: [[0, 2]]
+			});
+
+            expect(marsRover.moveToDestination()?.length).toBeGreaterThan(3)
+            expect(marsRover.moveToDestination()?.includes(InstructionCommands.L)).toBeTruthy()
+			expect(marsRover.moveToDestination()).toBeInstanceOf(Array);
 		});
     })
 });
